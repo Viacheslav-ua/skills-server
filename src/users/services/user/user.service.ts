@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entities/users.entity';
 import { CreateUserInput } from 'src/users/inputs/create-user.input';
 import { UpdateUserInput } from 'src/users/inputs/update-user.input';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
