@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import { CreateUserDto } from 'src/users/dto/crete-user.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { UserEntity } from 'src/users/entities/users.entity';
-import { CreateUserInput } from 'src/users/inputs/create-user.input';
-import { UpdateUserInput } from 'src/users/inputs/update-user.input';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async createUser(createUserInput: CreateUserInput): Promise<UserEntity> {
-    return await this.userRepository.save({ ...createUserInput });
+  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+    return await this.userRepository.save({ ...createUserDto });
   }
 
   async getOneUser(id: number): Promise<UserEntity> {
@@ -30,11 +30,11 @@ export class UserService {
     return id;
   }
 
-  async updateUser(updateUserInput: UpdateUserInput): Promise<UserEntity> {
+  async updateUser(updateUserDto: UpdateUserDto): Promise<UserEntity> {
     await this.userRepository.update(
-      { id: updateUserInput.id },
-      { ...updateUserInput },
+      { id: updateUserDto.id },
+      { ...updateUserDto },
     );
-    return this.getOneUser(updateUserInput.id);
+    return this.getOneUser(updateUserDto.id);
   }
 }
