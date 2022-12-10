@@ -31,8 +31,4 @@ export class Role {
   @ApiProperty()
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: User[];
 }

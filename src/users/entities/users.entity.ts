@@ -1,8 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/roles/entities/roles.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,4 +35,8 @@ export class User {
   @ApiProperty()
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[];
 }
