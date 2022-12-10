@@ -28,7 +28,7 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({ loadRelationIds: true });
   }
 
   async removeUser(id: number): Promise<number> {
