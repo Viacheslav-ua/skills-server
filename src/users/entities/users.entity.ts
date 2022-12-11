@@ -22,7 +22,7 @@ export class User {
 
   @ApiProperty()
   @Column({ nullable: true })
-  passwordHash: string;
+  password: string;
 
   @ApiProperty()
   @Column({ nullable: true })

@@ -8,7 +8,7 @@ export class UpdateUserDto {
   readonly login: string;
 
   @ApiProperty()
-  readonly passwordHash: string;
+  readonly password: string;
 
   @ApiProperty()
   readonly email?: string;

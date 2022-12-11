@@ -2,5 +2,6 @@
   "cSpell.words": [
     "nestjs",
     "TYPEORM"
-  ]
+  ],
+  "editor.minimap.maxColumn": 150
 }
