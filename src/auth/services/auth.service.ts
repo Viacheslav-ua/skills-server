@@ -1,18 +1,28 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/crete-user.dto';
 import { UserService } from 'src/users/services/user.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/entities/users.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
-  // async login(createUserDto: CreateUserDto) {}
+  async login(createUserDto: CreateUserDto) {
+    const user = await this.validateUser(createUserDto);
+    return this.generateAccessToken(user);
+  }
 
   async registration(createUserDto: CreateUserDto) {
     const candidate = await this.userService.getUserByLogin(
@@ -25,20 +35,33 @@ export class AuthService {
       );
     }
 
-    const salt = Number(process.env.SALT);
+    const salt = Number(this.configService.get<string>('SALT'));
     const hashPassword = await bcrypt.hash(createUserDto.password, salt);
     const user = await this.userService.createUser({
       ...createUserDto,
       password: hashPassword,
     });
 
-    return this.generateToken(user);
+    return this.generateAccessToken(user);
   }
 
-  async generateToken(user: User) {
+  private async generateAccessToken(user: User) {
     const payload = { login: user.login, id: user.id, roles: user.roles };
     return {
-      token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  private async validateUser(createUserDto: CreateUserDto) {
+    const user = await this.userService.getUserByLogin(createUserDto.login);
+    const passwordEquals = await bcrypt.compare(
+      createUserDto.password,
+      user.password,
+    );
+
+    if (user && passwordEquals) {
+      return user;
+    }
+    throw new UnauthorizedException();
   }
 }
