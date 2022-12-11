@@ -23,22 +23,22 @@ export class UserService {
     return user;
   }
 
-  async getOneUser(id: number): Promise<User> {
+  async getOneUser(id: number): Promise<any> {
     return await this.userRepository.findOne({
       where: { id },
-      loadRelationIds: true,
+      relations: ['roles'],
     });
   }
 
   async getUserByLogin(login: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { login },
-      loadRelationIds: true,
+      relations: ['roles'],
     });
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ loadRelationIds: true });
+    return await this.userRepository.find({ relations: ['roles'] });
   }
 
   async removeUser(id: number): Promise<number> {
