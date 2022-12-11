@@ -45,10 +45,10 @@ export class AuthService {
     return this.generateAccessToken(user);
   }
 
-  // async refresh(id: number) {
-  //   const user = await this.userService.getOneUser(id);
-  //   return this.generateAccessToken(user);
-  // }
+  async refresh(id: number) {
+    const user = await this.userService.getOneUser(id);
+    return this.generateAccessToken(user);
+  }
 
   private async generateAccessToken(user: User) {
     const payload = { login: user.login, id: user.id, roles: user.roles };
