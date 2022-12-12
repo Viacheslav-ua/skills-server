@@ -7,6 +7,7 @@ import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/users.entity';
 import { Repository } from 'typeorm';
 import { AddRoleDto } from '../dto/add-role.dto';
+import { BanUserDto } from '../dto/ban-user.dto';
 
 @Injectable()
 export class UserService {
@@ -56,6 +57,10 @@ export class UserService {
   }
 
   async addRole(addRoleDto: AddRoleDto) {
+    return null;
+  }
+
+  async ban(banUserDto: BanUserDto) {
     return null;
   }
 }
