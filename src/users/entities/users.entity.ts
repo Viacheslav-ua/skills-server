@@ -34,7 +34,7 @@ export class User {
 
   @ApiProperty()
   @Column({ nullable: true })
-  bunReason: string;
+  banReason: string;
 
   @ApiProperty()
   @CreateDateColumn()

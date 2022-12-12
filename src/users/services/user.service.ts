@@ -69,6 +69,12 @@ export class UserService {
   }
 
   async ban(banUserDto: BanUserDto) {
-    return null;
+    const user = await this.getOneUser(banUserDto.userId);
+    if (user) {
+      user.banned = banUserDto.ban;
+      user.banReason = banUserDto.banReason;
+      await this.userRepository.save(user);
+      return await this.userRepository.save(user);
+    }
   }
 }

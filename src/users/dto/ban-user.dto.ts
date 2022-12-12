@@ -5,5 +5,8 @@ export class BanUserDto {
   readonly userId: number;
 
   @ApiProperty()
+  readonly ban: boolean;
+
+  @ApiProperty()
   readonly banReason: string;
 }

@@ -34,8 +34,13 @@ export class UserController {
   @ApiResponse({ status: 200 })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
-  @Get('/ban')
-  ban(@Body() banUserDto: BanUserDto) {
-    return this.userService.ban(banUserDto);
+  @Post('/ban')
+  async ban(@Body() banUserDto: BanUserDto) {
+    const user: User = await this.userService.ban(banUserDto);
+    return {
+      id: user.id,
+      banned: user.banned,
+      banReason: user.banReason,
+    };
   }
 }
