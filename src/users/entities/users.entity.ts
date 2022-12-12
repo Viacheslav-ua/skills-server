@@ -29,6 +29,14 @@ export class User {
   email: string;
 
   @ApiProperty()
+  @Column({ nullable: false, default: false })
+  banned: boolean;
+
+  @ApiProperty()
+  @Column({ nullable: true })
+  bunReason: string;
+
+  @ApiProperty()
   @CreateDateColumn()
   createdAt: Date;
 

@@ -1,7 +1,8 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/services/roles.guard';
+import { AddRoleDto } from '../dto/add-role.dto';
 import { User } from '../entities/users.entity';
 import { UserService } from '../services/user.service';
 
@@ -17,5 +18,14 @@ export class UserController {
   @Get()
   getAll() {
     return this.userService.getAllUsers();
+  }
+
+  @ApiOperation({ summary: 'Assigning roles' })
+  @ApiResponse({ status: 200 })
+  @Roles('ADMIN', 'USER')
+  @UseGuards(RolesGuard)
+  @Get('/role')
+  addRole(@Body() addRoleDto: AddRoleDto) {
+    return this.userService.addRole(addRoleDto);
   }
 }

@@ -6,6 +6,7 @@ import { CreateUserDto } from 'src/users/dto/crete-user.dto';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/users.entity';
 import { Repository } from 'typeorm';
+import { AddRoleDto } from '../dto/add-role.dto';
 
 @Injectable()
 export class UserService {
@@ -52,5 +53,9 @@ export class UserService {
       { ...updateUserDto },
     );
     return this.getOneUser(updateUserDto.id);
+  }
+
+  async addRole(addRoleDto: AddRoleDto) {
+    return null;
   }
 }
