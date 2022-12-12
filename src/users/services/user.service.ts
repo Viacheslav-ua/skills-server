@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RolesService } from 'src/roles/services/roles.service';
 
@@ -25,7 +25,7 @@ export class UserService {
     return user;
   }
 
-  async getOneUser(id: number): Promise<any> {
+  async getOneUser(id: number): Promise<User> {
     return await this.userRepository.findOne({
       where: { id },
       relations: ['roles'],
@@ -57,7 +57,15 @@ export class UserService {
   }
 
   async addRole(addRoleDto: AddRoleDto) {
-    return null;
+    const user = await this.getOneUser(addRoleDto.userId);
+    const role = await this.roleService.getRoleByValue(addRoleDto.value);
+    if (role && user) {
+      user.roles.push(role);
+      await this.userRepository.save(user);
+      return await this.getOneUser(addRoleDto.userId);
+    }
+
+    return new HttpException('User or Role not found', HttpStatus.NOT_FOUND);
   }
 
   async ban(banUserDto: BanUserDto) {
