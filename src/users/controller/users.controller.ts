@@ -44,11 +44,5 @@ export class UserController {
   @Post('/ban')
   async ban(@Body() banUserDto: BanUserDto) {
     return this.userService.ban(banUserDto);
-    // const user: User | HttpException = await this.userService.ban(banUserDto);
-    // return {
-    //   id: user.id,
-    //   banned: user.banned,
-    //   banReason: user.banReason,
-    // };
   }
 }
