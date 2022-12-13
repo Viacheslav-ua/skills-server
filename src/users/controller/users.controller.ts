@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/services/roles.guard';
@@ -36,11 +43,12 @@ export class UserController {
   @UseGuards(RolesGuard)
   @Post('/ban')
   async ban(@Body() banUserDto: BanUserDto) {
-    const user: User = await this.userService.ban(banUserDto);
-    return {
-      id: user.id,
-      banned: user.banned,
-      banReason: user.banReason,
-    };
+    return this.userService.ban(banUserDto);
+    // const user: User | HttpException = await this.userService.ban(banUserDto);
+    // return {
+    //   id: user.id,
+    //   banned: user.banned,
+    //   banReason: user.banReason,
+    // };
   }
 }

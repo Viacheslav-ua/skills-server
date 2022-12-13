@@ -76,5 +76,6 @@ export class UserService {
       await this.userRepository.save(user);
       return await this.userRepository.save(user);
     }
+    return new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 }
