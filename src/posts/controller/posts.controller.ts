@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UploadedFile } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { PostsService } from '../services/posts.service';
 
@@ -7,6 +14,8 @@ export class PostsController {
   constructor(private postService: PostsService) {}
 
   @Post()
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  createPost(@Body() createPostDto: CreatePostDto, @UploadedFile() image) {}
+  @UseInterceptors(FileInterceptor('image'))
+  createPost(@Body() createPostDto: CreatePostDto, @UploadedFile() image) {
+    return this.postService.create(createPostDto, image);
+  }
 }
