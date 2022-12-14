@@ -2,10 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEmail,
-  IsNumber,
   IsOptional,
   IsString,
-  Max,
   MaxLength,
 } from 'class-validator';
 
@@ -56,9 +54,4 @@ export class CreateContactDto {
   @IsOptional()
   @IsBoolean()
   readonly markForRemove: boolean;
-
-  @ApiProperty()
-  @IsNumber({}, { message: 'Should be a number' })
-  @Max(99999999999)
-  readonly userId: number;
 }
