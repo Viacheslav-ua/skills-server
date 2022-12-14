@@ -25,6 +25,6 @@ export class FilesService {
   }
 
   private async fileExists(path: string) {
-    return !!(await fsPromises.stat(path).catch((e) => false));
+    return !!(await fsPromises.stat(path).catch(() => false));
   }
 }

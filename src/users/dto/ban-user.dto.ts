@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, Max } from 'class-validator';
+import { IsBoolean, IsNumber, MaxLength } from 'class-validator';
 
 export class BanUserDto {
   @ApiProperty()
@@ -11,6 +11,6 @@ export class BanUserDto {
   readonly ban: boolean;
 
   @ApiProperty()
-  @Max(200, { message: 'Allowed to 200 characters' })
+  @MaxLength(200, { message: 'Allowed to 200 characters' })
   readonly banReason: string;
 }
