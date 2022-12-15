@@ -26,14 +26,15 @@ export class ContactsService {
   }
 
   async getOneContact(id: number) {
-    return await this.contactRepository.findOne({ where: { id } });
+    const contact = await this.contactRepository.findOne({ where: { id } });
+    if (contact) {
+      return contact;
+    }
+    throw new HttpException(ExceptionEnum.CONTACT_N_F, HttpStatus.NOT_FOUND);
   }
 
   async removeMarkContact(id: number): Promise<DeleteResult> {
     const contact = await this.getOneContact(id);
-    if (!contact) {
-      throw new HttpException(ExceptionEnum.CONTACT_N_F, HttpStatus.NOT_FOUND);
-    }
     if (contact.markForRemove === true) {
       return await this.contactRepository.delete({ id });
     }
@@ -46,5 +47,11 @@ export class ContactsService {
   async removeAllMarkContacts(userId: number): Promise<DeleteResult> {
     const user = await this.userService.getOneUser(userId);
     return await this.contactRepository.delete({ user, markForRemove: true });
+  }
+
+  async toggleMarkForRemove(id: number): Promise<Contact> {
+    const contact = await this.getOneContact(id);
+    contact.markForRemove = !contact.markForRemove;
+    return this.contactRepository.save(contact);
   }
 }

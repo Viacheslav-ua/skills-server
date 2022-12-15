@@ -5,12 +5,15 @@ import {
   Get,
   Param,
   Post,
+  Patch,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/services/jwt-auth.guard';
+import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { UserService } from 'src/users/services/user.service';
+import { DeleteResult } from 'typeorm';
 import { CreateContactDto } from '../dto/create-contact.dto';
 import { Contact } from '../entities/contacts.entity';
 import { ContactsService } from '../services/contacts.service';
@@ -41,7 +44,7 @@ export class ContactsController {
   @ApiOperation({ summary: 'Remove mark contact by id' })
   @ApiResponse({ status: 200 })
   @UseGuards(JwtAuthGuard)
-  @Delete('/:id')
+  @Delete(EndpointEnum.ID)
   removeContact(@Param('id') id: number) {
     return this.contactsService.removeMarkContact(id);
   }
@@ -52,5 +55,13 @@ export class ContactsController {
   @Delete()
   removeAllContacts(@Request() req) {
     return this.contactsService.removeAllMarkContacts(req.user.id);
+  }
+
+  @ApiOperation({ summary: 'Toggle mark for remove contacts' })
+  @ApiResponse({ status: 200, type: Contact })
+  @UseGuards(JwtAuthGuard)
+  @Patch(EndpointEnum.MARK_ID)
+  ToggleMark(@Param('id') id: number) {
+    return this.contactsService.toggleMarkForRemove(id);
   }
 }
