@@ -42,4 +42,9 @@ export class ContactsService {
       HttpStatus.NOT_IMPLEMENTED,
     );
   }
+
+  async removeAllMarkContacts(userId: number): Promise<DeleteResult> {
+    const user = await this.userService.getOneUser(userId);
+    return await this.contactRepository.delete({ user, markForRemove: true });
+  }
 }

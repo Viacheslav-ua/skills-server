@@ -38,11 +38,19 @@ export class ContactsController {
     return this.userService.getContactsByUser(req.user.id);
   }
 
-  @ApiOperation({ summary: 'Remove contact by id' })
+  @ApiOperation({ summary: 'Remove mark contact by id' })
   @ApiResponse({ status: 200 })
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   removeContact(@Param('id') id: number) {
     return this.contactsService.removeMarkContact(id);
+  }
+
+  @ApiOperation({ summary: 'Remove all mark contacts' })
+  @ApiResponse({ status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  removeAllContacts(@Request() req) {
+    return this.contactsService.removeAllMarkContacts(req.user.id);
   }
 }
