@@ -47,7 +47,7 @@ export class Contact {
   @Column({ nullable: false, default: false })
   markForRemove: boolean;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.contacts)
   user: User;
 
   @ApiProperty()

@@ -32,6 +32,13 @@ export class UserService {
     });
   }
 
+  async getContactsByUser(id: number): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['contacts'],
+    });
+  }
+
   async getUserByLogin(login: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { login },

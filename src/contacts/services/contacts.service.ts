@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/users.entity';
+import { UserService } from 'src/users/services/user.service';
 
 import { Repository } from 'typeorm';
 import { CreateContactDto } from '../dto/create-contact.dto';
@@ -10,18 +12,31 @@ export class ContactsService {
   constructor(
     @InjectRepository(Contact)
     private readonly contactRepository: Repository<Contact>,
+    private readonly userService: UserService,
   ) {}
 
   async createContact(
     createContactDto: CreateContactDto,
     userId: number,
   ): Promise<Contact> {
-    const contact = await this.contactRepository.save({
-      ...createContactDto,
-      userId,
-    });
-    return contact;
+    const contact = await this.contactRepository.save(createContactDto);
+    const user = await this.userService.getOneUser(userId);
+    contact.user = user;
+    return await this.contactRepository.save(contact);
   }
+
+  // async getAllContactsByUser(userId: number): Promise<Contact[]> {
+  //   const user = await this.userService.getOneUser(userId);
+
+  //   // console.log('user', {user});
+
+  //   const contacts = await this.contactRepository.find({
+  //     where: { user: { ...user } },
+  //   });
+  //   console.log(contacts);
+
+  //   return contacts;
+  // }
 
   // async getOneUser(id: number): Promise<User> {
   //   return await this.userRepository.findOne({

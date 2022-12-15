@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Contact } from 'src/contacts/entities/contacts.entity';
 import { Role } from 'src/roles/entities/roles.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -47,4 +49,7 @@ export class User {
   @ManyToMany(() => Role)
   @JoinTable()
   roles: Role[];
+
+  @OneToMany(() => Contact, (contact) => contact.user)
+  contacts: Contact[];
 }
