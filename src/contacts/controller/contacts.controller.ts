@@ -9,8 +9,9 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/services/jwt-auth.guard';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
 import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { UserService } from 'src/users/services/user.service';
 import { DeleteResult } from 'typeorm';
@@ -18,14 +19,15 @@ import { CreateContactDto } from '../dto/create-contact.dto';
 import { Contact } from '../entities/contacts.entity';
 import { ContactsService } from '../services/contacts.service';
 
-@Controller('contacts')
+@ApiTags(ApiTextEnum.CONTACTS)
+@Controller(EndpointEnum.CONTACTS)
 export class ContactsController {
   constructor(
     private contactsService: ContactsService,
     private userService: UserService,
   ) {}
 
-  @ApiOperation({ summary: 'Create contact' })
+  @ApiOperation({ summary: ApiTextEnum.CREATE_CONTACT })
   @ApiResponse({ status: 201, type: Contact })
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -33,7 +35,7 @@ export class ContactsController {
     return this.contactsService.createContact(createContactDto, req.user.id);
   }
 
-  @ApiOperation({ summary: 'Get contacts by user' })
+  @ApiOperation({ summary: ApiTextEnum.GET_CONTACTS_USER })
   @ApiResponse({ status: 200 })
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -41,27 +43,27 @@ export class ContactsController {
     return this.userService.getContactsByUser(req.user.id);
   }
 
-  @ApiOperation({ summary: 'Remove mark contact by id' })
-  @ApiResponse({ status: 200 })
+  @ApiOperation({ summary: ApiTextEnum.REMOVE_MARK_ID })
+  @ApiResponse({ status: 200, type: DeleteResult })
   @UseGuards(JwtAuthGuard)
   @Delete(EndpointEnum.ID)
-  removeContact(@Param('id') id: number) {
+  removeContact(@Param(EndpointEnum.PARAM_ID) id: number) {
     return this.contactsService.removeMarkContact(id);
   }
 
-  @ApiOperation({ summary: 'Remove all mark contacts' })
-  @ApiResponse({ status: 200 })
+  @ApiOperation({ summary: ApiTextEnum.REMOVE_M_CONTACTS })
+  @ApiResponse({ status: 200, type: DeleteResult })
   @UseGuards(JwtAuthGuard)
   @Delete()
   removeAllContacts(@Request() req) {
     return this.contactsService.removeAllMarkContacts(req.user.id);
   }
 
-  @ApiOperation({ summary: 'Toggle mark for remove contacts' })
+  @ApiOperation({ summary: ApiTextEnum.TOGGLE_MARK_REMOVE })
   @ApiResponse({ status: 200, type: Contact })
   @UseGuards(JwtAuthGuard)
   @Patch(EndpointEnum.MARK_ID)
-  ToggleMark(@Param('id') id: number) {
+  ToggleMark(@Param(EndpointEnum.PARAM_ID) id: number) {
     return this.contactsService.toggleMarkForRemove(id);
   }
 }

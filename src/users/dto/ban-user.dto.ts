@@ -1,16 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, MaxLength } from 'class-validator';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
 
 export class BanUserDto {
   @ApiProperty()
-  @IsNumber({}, { message: 'Should be a number' })
+  @IsNumber({}, { message: ApiTextEnum.BE_NUMBER })
   readonly userId: number;
 
   @ApiProperty()
-  @IsBoolean({ message: 'Should be a boolean' })
+  @IsBoolean({ message: ApiTextEnum.BE_BOOL })
   readonly ban: boolean;
 
   @ApiProperty()
-  @MaxLength(200, { message: 'Allowed to 200 characters' })
+  @MaxLength(200, { message: ApiTextEnum.TO_200 })
   readonly banReason: string;
 }

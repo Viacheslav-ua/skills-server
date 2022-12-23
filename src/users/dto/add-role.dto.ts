@@ -1,13 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString, Length } from 'class-validator';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
 
 export class AddRoleDto {
   @ApiProperty()
-  @IsNumber({}, { message: 'Should be a number' })
+  @IsNumber({}, { message: ApiTextEnum.BE_NUMBER })
   readonly userId: number;
 
   @ApiProperty()
-  @IsString({ message: 'Should be a string' })
-  @Length(1, 64, { message: 'Allowed from 1 to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @Length(1, 64, { message: ApiTextEnum.FROM_1_TO_64 })
   readonly value: string;
 }

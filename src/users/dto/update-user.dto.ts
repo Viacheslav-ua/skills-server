@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
 import {
   IsEmail,
   IsNumber,
@@ -9,22 +10,22 @@ import {
 
 export class UpdateUserDto {
   @ApiProperty()
-  @IsNumber({}, { message: 'Should be a number' })
+  @IsNumber({}, { message: ApiTextEnum.BE_NUMBER })
   readonly id: number;
 
   @ApiProperty()
-  @IsString({ message: 'Should be a string' })
-  @Length(2, 64, { message: 'Allowed from 2 to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @Length(2, 64, { message: ApiTextEnum.FROM_2_TO_64 })
   readonly login: string;
 
   @ApiProperty()
-  @IsString({ message: 'Should be a string' })
-  @Length(2, 64, { message: 'Allowed from 2 to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @Length(2, 64, { message: ApiTextEnum.FROM_2_TO_64 })
   readonly password: string;
 
   @ApiProperty()
   @IsOptional()
-  @Length(4, 64, { message: 'Allowed from 2 to 64 characters' })
+  @Length(2, 64, { message: ApiTextEnum.FROM_2_TO_64 })
   @IsEmail()
   readonly email?: string;
 }

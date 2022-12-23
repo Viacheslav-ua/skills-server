@@ -6,15 +6,19 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
+import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { PostsService } from '../services/posts.service';
 
-@Controller('posts')
+@ApiTags(ApiTextEnum.POSTS)
+@Controller(EndpointEnum.POSTS)
 export class PostsController {
   constructor(private postService: PostsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor(EndpointEnum.IMAGE))
   createPost(@Body() createPostDto: CreatePostDto, @UploadedFile() image) {
     return this.postService.create(createPostDto, image);
   }

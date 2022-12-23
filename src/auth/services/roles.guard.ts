@@ -9,8 +9,9 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { ExceptionEnum } from 'src/helpers/exception.enum';
+import { KeysEnum } from 'src/helpers/keys.enum';
 import { Role } from 'src/roles/entities/roles.entity';
-import { ROLES_KEY } from '../decorators/roles-auth.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -21,10 +22,10 @@ export class RolesGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
     try {
-      const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY, [
-        context.getHandler(),
-        context.getClass(),
-      ]);
+      const requiredRoles = this.reflector.getAllAndOverride(
+        KeysEnum.ROLES_KEY,
+        [context.getHandler(), context.getClass()],
+      );
 
       if (!requiredRoles) {
         return true;
@@ -34,7 +35,7 @@ export class RolesGuard implements CanActivate {
       const bearer = authorization[0];
       const token = authorization[1];
 
-      if (bearer !== 'Bearer' || !token) {
+      if (bearer !== KeysEnum.BEARER || !token) {
         throw new UnauthorizedException();
       }
 
@@ -45,7 +46,7 @@ export class RolesGuard implements CanActivate {
         requiredRoles.includes(role.value),
       );
     } catch (e) {
-      throw new HttpException('Do not have access', HttpStatus.FORBIDDEN);
+      throw new HttpException(ExceptionEnum.NO_ACCESS, HttpStatus.FORBIDDEN);
     }
   }
 }

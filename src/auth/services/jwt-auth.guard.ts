@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { KeysEnum } from 'src/helpers/keys.enum';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class JwtAuthGuard implements CanActivate {
       const bearer = authorization[0];
       const token = authorization[1];
 
-      if (bearer !== 'Bearer' || !token) {
+      if (bearer !== KeysEnum.BEARER || !token) {
         throw new UnauthorizedException();
       }
 

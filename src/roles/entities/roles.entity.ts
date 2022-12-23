@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('roles')
+@Entity(EndpointEnum.ROLES)
 export class Role {
-  @ApiProperty({ example: '1' })
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from './pipes/validation.pipe';
+import { EndpointEnum } from './helpers/endpoint.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -14,7 +15,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('/api/docs', app, document);
+  SwaggerModule.setup(EndpointEnum.DOCS, app, document);
 
   const config = app.get(ConfigService);
   const port = config.get<number>('API_PORT') || 3000;

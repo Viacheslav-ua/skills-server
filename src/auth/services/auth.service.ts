@@ -10,6 +10,7 @@ import { UserService } from 'src/users/services/user.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/entities/users.entity';
 import { ConfigService } from '@nestjs/config';
+import { ExceptionEnum } from 'src/helpers/exception.enum';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
     );
     if (candidate) {
       throw new HttpException(
-        'User with this login already exists',
+        ExceptionEnum.USER_LOGIN_N_F,
         HttpStatus.BAD_REQUEST,
       );
     }

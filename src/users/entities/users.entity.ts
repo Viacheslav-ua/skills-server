@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Contact } from 'src/contacts/entities/contacts.entity';
+import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { Role } from 'src/roles/entities/roles.entity';
 import {
   Column,
@@ -12,9 +13,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('users')
+@Entity(EndpointEnum.USERS)
 export class User {
-  @ApiProperty({ example: '1' })
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 

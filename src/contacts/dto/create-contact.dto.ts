@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ApiTextEnum } from 'src/helpers/api-text.enum';
 import {
   IsBoolean,
   IsEmail,
@@ -9,45 +10,45 @@ import {
 
 export class CreateContactDto {
   @ApiProperty()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(64, { message: 'Allowed to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(64, { message: ApiTextEnum.TO_64 })
   readonly name: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(64, { message: 'Allowed to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(64, { message: ApiTextEnum.TO_64 })
   readonly nicName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(64, { message: 'Allowed to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(64, { message: ApiTextEnum.TO_64 })
   readonly lastName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(200, { message: 'Allowed to 200 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(200, { message: ApiTextEnum.TO_200 })
   readonly description?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(64, { message: 'Allowed to 64 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(64, { message: ApiTextEnum.TO_64 })
   readonly phone?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
   @IsEmail()
-  @MaxLength(64, { message: 'Allowed to 64 characters' })
+  @MaxLength(64, { message: ApiTextEnum.TO_64 })
   readonly email?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'Should be a string' })
-  @MaxLength(128, { message: 'Allowed to 128 characters' })
+  @IsString({ message: ApiTextEnum.BE_STRING })
+  @MaxLength(128, { message: ApiTextEnum.TO_128 })
   readonly avatar?: string;
 
   @ApiProperty()

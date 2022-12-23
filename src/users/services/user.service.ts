@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EndpointEnum } from 'src/helpers/endpoint.enum';
+import { ExceptionEnum } from 'src/helpers/exception.enum';
+import { RolesEnum } from 'src/helpers/roles.enum';
 import { RolesService } from 'src/roles/services/roles.service';
 
 import { CreateUserDto } from 'src/users/dto/crete-user.dto';
@@ -19,7 +22,7 @@ export class UserService {
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userRepository.save(createUserDto);
-    const role = await this.roleService.getRoleByValue('USER');
+    const role = await this.roleService.getRoleByValue(RolesEnum.USER);
     user.roles = [role];
     await this.userRepository.save(user);
     return user;
@@ -28,26 +31,26 @@ export class UserService {
   async getOneUser(id: number): Promise<User> {
     return await this.userRepository.findOne({
       where: { id },
-      relations: ['roles'],
+      relations: [EndpointEnum.USERS],
     });
   }
 
   async getContactsByUser(id: number): Promise<User> {
     return await this.userRepository.findOne({
       where: { id },
-      relations: ['contacts'],
+      relations: [EndpointEnum.CONTACTS],
     });
   }
 
   async getUserByLogin(login: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { login },
-      relations: ['roles'],
+      relations: [EndpointEnum.USERS],
     });
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ['roles'] });
+    return await this.userRepository.find({ relations: [EndpointEnum.ROLES] });
   }
 
   async removeUser(id: number): Promise<number> {
@@ -72,7 +75,7 @@ export class UserService {
       return await this.getOneUser(addRoleDto.userId);
     }
 
-    return new HttpException('User or Role not found', HttpStatus.NOT_FOUND);
+    return new HttpException(ExceptionEnum.USER_ROLE_N_F, HttpStatus.NOT_FOUND);
   }
 
   async ban(banUserDto: BanUserDto) {
@@ -83,6 +86,6 @@ export class UserService {
       await this.userRepository.save(user);
       return await this.userRepository.save(user);
     }
-    return new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return new HttpException(ExceptionEnum.USER_N_F, HttpStatus.NOT_FOUND);
   }
 }
