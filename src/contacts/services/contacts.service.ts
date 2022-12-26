@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ExceptionEnum } from 'src/helpers/exception.enum';
 import { UserService } from 'src/users/services/user.service';
 
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateContactDto } from '../dto/create-contact.dto';
+import { UpdateContactDto } from '../dto/update-contact.dto';
 import { Contact } from '../entities/contacts.entity';
 
 @Injectable()
@@ -53,5 +54,16 @@ export class ContactsService {
     const contact = await this.getOneContact(id);
     contact.markForRemove = !contact.markForRemove;
     return this.contactRepository.save(contact);
+  }
+
+  async editContact(
+    userId: number,
+    updateContactDto: UpdateContactDto,
+  ): Promise<UpdateResult> {
+    const user = await this.userService.getOneUser(userId);
+    return await this.contactRepository.update(
+      { id: updateContactDto.id, user },
+      updateContactDto,
+    );
   }
 }

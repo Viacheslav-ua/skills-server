@@ -11,6 +11,7 @@ export enum EndpointEnum {
   ROLE = '/role',
   BAN = '/ban',
   VALUE = '/:value',
+  EDIT = '/edit/:id',
   PARAM_VALUE = 'value',
   CONTACTS = 'contacts',
   POSTS = 'posts',

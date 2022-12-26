@@ -13,6 +13,7 @@ export enum ApiTextEnum {
   REMOVE_MARK_ID = 'Remove mark contact by id',
   REMOVE_M_CONTACTS = 'Remove all mark contacts',
   TOGGLE_MARK_REMOVE = 'Toggle mark for remove contacts',
+  EDIT_CONTACT = 'Edit contact',
   BE_STRING = 'Should be a string',
   BE_NUMBER = 'Should be a number',
   BE_BOOL = 'Should be a boolean',

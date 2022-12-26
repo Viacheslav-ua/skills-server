@@ -16,6 +16,7 @@ import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { UserService } from 'src/users/services/user.service';
 import { DeleteResult } from 'typeorm';
 import { CreateContactDto } from '../dto/create-contact.dto';
+import { UpdateContactDto } from '../dto/update-contact.dto';
 import { Contact } from '../entities/contacts.entity';
 import { ContactsService } from '../services/contacts.service';
 
@@ -63,7 +64,15 @@ export class ContactsController {
   @ApiResponse({ status: 200, type: Contact })
   @UseGuards(JwtAuthGuard)
   @Patch(EndpointEnum.MARK_ID)
-  ToggleMark(@Param(EndpointEnum.PARAM_ID) id: number) {
+  toggleMark(@Param(EndpointEnum.PARAM_ID) id: number) {
     return this.contactsService.toggleMarkForRemove(id);
+  }
+
+  @ApiOperation({ summary: ApiTextEnum.EDIT_CONTACT })
+  @ApiResponse({ status: 200, type: Contact })
+  @UseGuards(JwtAuthGuard)
+  @Patch(EndpointEnum.EDIT)
+  editContact(@Request() req, @Body() updateContactDto: UpdateContactDto) {
+    return this.contactsService.editContact(req.user.id, updateContactDto);
   }
 }

@@ -31,7 +31,7 @@ export class UserService {
   async getOneUser(id: number): Promise<User> {
     return await this.userRepository.findOne({
       where: { id },
-      relations: [EndpointEnum.USERS],
+      relations: [EndpointEnum.CONTACTS],
     });
   }
 
@@ -45,7 +45,7 @@ export class UserService {
   async getUserByLogin(login: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { login },
-      relations: [EndpointEnum.USERS],
+      relations: [EndpointEnum.CONTACTS],
     });
   }
 
