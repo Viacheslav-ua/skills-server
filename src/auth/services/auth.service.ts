@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  NotAcceptableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -60,6 +61,9 @@ export class AuthService {
 
   private async validateUser(createUserDto: CreateUserDto) {
     const user = await this.userService.getUserByLogin(createUserDto.login);
+    if (!user) {
+      throw new HttpException(UnauthorizedException, HttpStatus.BAD_REQUEST);
+    }
     const passwordEquals = await bcrypt.compare(
       createUserDto.password,
       user.password,

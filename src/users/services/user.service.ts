@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EndpointEnum } from 'src/helpers/endpoint.enum';
 import { ExceptionEnum } from 'src/helpers/exception.enum';
@@ -43,10 +48,11 @@ export class UserService {
   }
 
   async getUserByLogin(login: string): Promise<User> {
-    return await this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { login },
       relations: [EndpointEnum.CONTACTS],
     });
+    return user;
   }
 
   async getAllUsers(): Promise<User[]> {
