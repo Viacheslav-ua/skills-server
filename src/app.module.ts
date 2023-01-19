@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { RolesModule } from './roles/roles.module';
-import { AuthModule } from './auth/auth.module';
-import { ContactsModule } from './contacts/contacts.module';
-import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './features/users/users.module';
+import { RolesModule } from './features/roles/roles.module';
+import { AuthModule } from './features/auth/auth.module';
+import { ContactsModule } from './features/contacts/contacts.module';
+import { PostsModule } from './features/posts/posts.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';

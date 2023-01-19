@@ -2,8 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from './pipes/validation.pipe';
-import { EndpointEnum } from './helpers/endpoint.enum';
+import { ValidationPipe } from './core/pipes/validation.pipe';
+import { EndpointEnum } from './core/helpers/endpoint.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
