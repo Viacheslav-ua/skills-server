@@ -17,4 +17,6 @@ export enum EndpointEnum {
   POSTS = 'posts',
   IMAGE = 'image',
   ROLES = 'roles',
+  TODO = 'todo',
+  TASKS = 'tasks',
 }

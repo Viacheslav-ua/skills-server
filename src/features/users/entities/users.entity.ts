@@ -12,6 +12,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Todo } from 'src/features/todo/entities/todo.entity';
 
 @Entity(EndpointEnum.USERS)
 export class User {
@@ -53,4 +54,7 @@ export class User {
 
   @OneToMany(() => Contact, (contact) => contact.user)
   contacts: Contact[];
+
+  @OneToMany(() => Todo, (todo) => todo.user)
+  tasks: Todo[];
 }

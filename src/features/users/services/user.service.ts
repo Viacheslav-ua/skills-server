@@ -42,6 +42,31 @@ export class UserService {
     });
   }
 
+  async getOneTaskByUser(id: number, taskId: number): Promise<User> {
+    return await this.userRepository.findOne({
+      select: {
+        id: true,
+        tasks: true,
+      },
+      where: {
+        id,
+        tasks: { id: taskId },
+      },
+      relations: [EndpointEnum.TASKS],
+    });
+  }
+
+  async getTasksByUser(id: number): Promise<User> {
+    return await this.userRepository.findOne({
+      select: {
+        id: true,
+        tasks: true,
+      },
+      where: { id },
+      relations: [EndpointEnum.TASKS],
+    });
+  }
+
   async getUserByLogin(login: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { login },

@@ -8,6 +8,7 @@ import { ContactsModule } from './features/contacts/contacts.module';
 import { PostsModule } from './features/posts/posts.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TodoModule } from './features/todo/todo.module';
 import * as path from 'path';
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import * as path from 'path';
     ContactsModule,
     PostsModule,
     FilesModule,
+    TodoModule,
   ],
   providers: [],
 })
