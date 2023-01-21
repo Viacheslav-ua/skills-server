@@ -20,14 +20,15 @@ export class TodoService {
     const receivedUser = await this.userService.getOneUser(userId);
     todo.user = receivedUser;
     const result = await this.todoRepository.save(todo);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { user, ...answer } = result;
     return answer;
   }
 
-  async getOneTask(id: number, userId: number): Promise<Todo | HttpException> {
+  async getOneTask(id: number, userId: number): Promise<Todo> {
     const result = await this.userService.getOneTaskByUser(userId, id);
     if (!result) {
-      return new HttpException(ExceptionEnum.TODO_N_F, HttpStatus.NOT_FOUND);
+      throw new HttpException(ExceptionEnum.TODO_N_F, HttpStatus.NOT_FOUND);
     }
     return result.tasks[0];
   }
