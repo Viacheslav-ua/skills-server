@@ -61,7 +61,7 @@ export class AuthService {
   private async validateUser(createUserDto: CreateUserDto) {
     const user = await this.userService.getUserByLogin(createUserDto.login);
     if (!user) {
-      throw new HttpException(UnauthorizedException, HttpStatus.BAD_REQUEST);
+      throw new HttpException(ExceptionEnum.USER_L_N_F, HttpStatus.BAD_REQUEST);
     }
     const passwordEquals = await bcrypt.compare(
       createUserDto.password,
