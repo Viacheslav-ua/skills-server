@@ -64,6 +64,11 @@ export class UserService {
       },
       where: { id },
       relations: [EndpointEnum.TASKS],
+      order: {
+        tasks: {
+          createdAt: 'desc',
+        },
+      },
     });
   }
 
