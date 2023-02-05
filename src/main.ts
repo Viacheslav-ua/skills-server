@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Phone-book server')
+    .setTitle('Skills server')
     .setDescription('REST API Documentation')
     .setVersion('1.0.0')
     .build();
