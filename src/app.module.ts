@@ -1,19 +1,22 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './features/users/users.module';
+import { RolesModule } from './features/roles/roles.module';
+import { AuthModule } from './features/auth/auth.module';
+import { ContactsModule } from './features/contacts/contacts.module';
+import { PostsModule } from './features/posts/posts.module';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { TodoModule } from './features/todo/todo.module';
+import * as path from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static', 'pictures'),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,6 +35,12 @@ import { UsersModule } from './users/users.module';
       }),
     }),
     UsersModule,
+    RolesModule,
+    AuthModule,
+    ContactsModule,
+    PostsModule,
+    FilesModule,
+    TodoModule,
   ],
   providers: [],
 })
