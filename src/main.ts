@@ -17,7 +17,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(EndpointEnum.DOCS, app, document);
 
-  const port = process.env.PORT || process.env.API_PORT;
+  const port = process.env.API_PORT || 3002;
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(port, () => console.log(`Server started on ${port} port`));
