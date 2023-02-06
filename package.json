@@ -2,7 +2,8 @@
   "name": "phone-book-server",
   "version": "0.0.1",
   "engines": {
-    "node": "16.17.0"
+    "node": "16.17.0",
+    "npm": "8.1.2"
   },
   "description": "",
   "author": "",
